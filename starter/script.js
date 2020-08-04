@@ -359,9 +359,8 @@ console.log(whatDoYouDo('retired', 'Jane'));
 
 /********************************
  * Arrays
- */
 
-//  Initialize(초기화) new array
+ //  Initialize(초기화) new array
 var names = ['John', 'Mark', 'Jane'];
 var years = new Array(1990, 1969, 1948); // 이 방식은 비추(귀찮)
 
@@ -394,8 +393,32 @@ console.log(john.indexOf(23));
 // -1 없다는 뜻
 
 var isDesigner =
-    john.indexOf('designer') === -1
-        ? 'John is NOT a designer'
-        : 'John IS a designer';
+john.indexOf('designer') === -1
+? 'John is NOT a designer'
+: 'John IS a designer';
 console.log(isDesigner);
 // John is NOT a designer
+
+ */
+
+function fCostCal(cost) {
+    if (cost < 50) {
+        cost = cost * 0.2;
+    } else if (cost >= 50 && cost < 200) {
+        cost = cost * 0.15;
+    } else {
+        cost = cost * 0.1;
+    }
+    return Math.ceil(cost);
+}
+
+var foodCost = [124, 48, 268];
+var foodCostTip = [
+    fCostCal(foodCost[0]),
+    fCostCal(foodCost[1]),
+    fCostCal(foodCost[2]),
+];
+
+console.log('food cost tip is ' + foodCostTip[0] + '$');
+console.log('food cost tip is ' + foodCostTip[1] + '$');
+console.log('food cost tip is ' + foodCostTip[2] + '$');
