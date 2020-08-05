@@ -364,8 +364,8 @@ console.log(whatDoYouDo('retired', 'Jane'));
 var names = ['John', 'Mark', 'Jane'];
 var years = new Array(1990, 1969, 1948); // 이 방식은 비추(귀찮)
 
-console.log(names[2]);
-console.log(names.length);
+console.log(names[2]);      //Jane
+console.log(names.length);  //3
 
 // Mutate(돌연변이를 일으키다) array data
 names[1] = 'Ben';
@@ -400,7 +400,8 @@ console.log(isDesigner);
 // John is NOT a designer
 
  */
-
+/* 
+Coding challenge
 function fCostCal(cost) {
     if (cost < 50) {
         cost = cost * 0.2;
@@ -422,3 +423,204 @@ var foodCostTip = [
 console.log('food cost tip is ' + foodCostTip[0] + '$');
 console.log('food cost tip is ' + foodCostTip[1] + '$');
 console.log('food cost tip is ' + foodCostTip[2] + '$');
+ */
+
+/**********************************
+ * Objects(객체, 개체) and properties(속성)
+ 
+
+//  Objects literal(날 것의 obj)
+var john = {
+    firstName: 'John',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane', 'Mark', 'Bob', 'Emily'],
+    job: 'teacher',
+    isMarried: false,
+};
+
+console.log(john.firstName); // 성 출력
+console.log(john['lastName']); // 이름 출력
+var x = 'birthYear'; // x에 출생년 넣음
+console.log(john[x]); // ==console.log(john[birthYear]);
+
+john.job = 'designer';
+john['isMarried'] = true;
+console.log(john);
+
+// new Object syntax(컴퓨터 언어의 문법)
+// 새 개체 구문(그냥 이런 개 쩌는 방법도 있다)
+var jane = new Object();
+// 그냥 이렇게 새로 추가 가능
+jane.firstName = 'Jane';
+jane.birthYear = 1969;
+jane['lastName'] = 'Smith';
+console.log(jane);
+*/
+
+/****************************
+ * Objects and methods
+
+
+var john = {
+    firstName: 'John',
+    lastName: 'Smith',
+    birthYear: 1992,
+    family: ['Jane', 'Mark', 'Bob', 'Emily'],
+    job: 'teacher',
+    isMarried: false,
+    calcAge: function () {
+        // this == 현재 Objects를 의미 함
+        this.age = 2018 - this.birthYear;
+        // 현재 obj에 나이를 계산하여 넣음과 동시에 age에 값을 넣어서 요소를 추가 함
+    },
+};
+
+john.calcAge();         // john obj calcAge Fn call
+console.log(john);      // age가 추가 된 john Obj가 출력 됨
+ */
+
+/*******************
+  * Coding challenge
+
+
+var johnCalcBMI = {
+    name: 'John',
+    weight: 70,
+    height: 1.8,
+    calcB: function () {
+        this.bmi = this.weight / Math.pow(this.height, 2);
+    },
+};
+
+var markCalcBMI = {
+    name: 'Mark',
+    weight: 65,
+    height: 1.7,
+    calcB: function () {
+        this.bmi = this.weight / Math.pow(this.height, 2);
+    },
+};
+markCalcBMI.calcB();
+johnCalcBMI.calcB();
+console.log(
+    "Mark's BMI : " + markCalcBMI.bmi + "John's BMI : " + johnCalcBMI.bmi
+);
+
+if (johnCalcBMI.calcB() > markCalcBMI.calcB()) {
+    console.log("John's BMI height than Mark");
+} else if (johnCalcBMI.calcB() < markCalcBMI.calcB()) {
+    console.log("Mark's BMI height than John's");
+} else {
+    console.log('BMI same');
+}
+*/
+
+/***************************
+  * loop and iteration
+
+var john = ['John', 'Smith', 1990, 'designer', false, 'blue'];
+for (var i = 0; i < john.length; i++) {
+    if (typeof john[i] !== 'boolean') continue;
+    console.log(john[i]);
+}
+
+for (var i = john.length - 1; i >= 0; i--) {
+    console.log(john[i]);
+}
+  */
+
+/************************************
+ * Coding challenge
+ */
+/* 
+function fCostCal(cost) {
+    if (cost < 50) {
+        cost = cost * 0.2;
+    } else if (cost >= 50 && cost < 200) {
+        cost = cost * 0.15;
+    } else {
+        cost = cost * 0.1;
+    }
+    return Math.ceil(cost);
+}
+
+var foodCost = [124, 48, 268];
+var foodCostTip = [
+    fCostCal(foodCost[0]),
+    fCostCal(foodCost[1]),
+    fCostCal(foodCost[2]),
+];
+
+console.log('food cost tip is ' + foodCostTip[0] + '$');
+console.log('food cost tip is ' + foodCostTip[1] + '$');
+console.log('food cost tip is ' + foodCostTip[2] + '$');
+ */
+// ($) 124, 48, 268, 180, 42
+// (tip) 20%(c<50),  15%(50<=c<200), 10%(200<=c)
+
+var johnBill = {
+    foodCost: [124, 48, 268, 180, 42],
+
+    foodCostTipCalc: function () {
+        this.foodCostTip = [];
+        this.finFoodCost = [];
+        for (var i = 0; i < this.foodCost.length; i++) {
+            this.foodCostTip[i] = this.fCostCal(this.foodCost[i]);
+        }
+        for (var i = 0; i < this.foodCost.length; i++) {
+            this.finFoodCost[i] = this.foodCost[i] + this.foodCostTip[i];
+        }
+    },
+    fCostCal: function (cost) {
+        if (cost < 50) {
+            cost = cost * 0.2;
+        } else if (cost >= 50 && cost < 200) {
+            cost = cost * 0.15;
+        } else {
+            cost = cost * 0.1;
+        }
+        return Math.ceil(cost);
+    },
+};
+johnBill.foodCostTipCalc();
+console.log(
+    'Food bill is ' +
+        johnBill.foodCost +
+        '\n your fin bill is' +
+        johnBill.finFoodCost +
+        '!!!'
+);
+
+var markBill = {
+    foodCost: [77, 375, 110, 45],
+
+    foodCostTipCalc: function () {
+        this.foodCostTip = [];
+        this.finFoodCost = [];
+        for (var i = 0; i < this.foodCost.length; i++) {
+            this.foodCostTip[i] = this.fCostCal(this.foodCost[i]);
+        }
+        for (var i = 0; i < this.foodCost.length; i++) {
+            this.finFoodCost[i] = this.foodCost[i] + this.foodCostTip[i];
+        }
+    },
+    fCostCal: function (cost) {
+        if (cost < 100) {
+            cost = cost * 0.2;
+        } else if (cost >= 100 && cost < 300) {
+            cost = cost * 0.1;
+        } else {
+            cost = cost * 0.25;
+        }
+        return Math.ceil(cost);
+    },
+};
+markBill.foodCostTipCalc();
+console.log(
+    'Food bill is ' +
+        markBill.foodCost +
+        '\n your fin bill is' +
+        markBill.finFoodCost +
+        '!!!'
+);
