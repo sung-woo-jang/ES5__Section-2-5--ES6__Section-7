@@ -1,17 +1,15 @@
-/*
-GAME RULES:
+/* 
+1. 플레이어는 두 개의 6을 연속으로 굴리면 전체 점수를 잃는다.
+그 다음엔 다음 선수 차례다.
+(Hint : 이전 주사위롤은 항상 별도의 변수에 저장)
 
-- The game has 2 players, playing in rounds
-- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
-- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
-- The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game
+2. 플레이어가 승리 점수를 설정할 수 있는 입력 필드를 HTML에 추가하여 미리 정의된 점수인 100점을 변경할 수 있도록 한다.
+(Hint : JavaScript의 .value 속성으로 그 값을 읽을 수 있다.
+이것은 구글을 사용하여 이것을 알아내기에 좋은 기회다 )
 
-- 이 경기는 2명이서 라운드를 한다.
-- 턴마다 선수가 휘젓는 횟수만큼 주사위를 굴린다. 각 결과가 ROUNT 점수에 추가됨
-- 하지만, 선수가 1점을 굴리면 라운드 점수가 모두 떨어진다. 그 다음엔 다음 선수 차례다.
-- 플레이어는 'Hold'를 선택할 수 있는데, 이는 자신의 라운드 점수가 GLBAL 점수에 추가된다는 것을 의미한다. 그 다음엔 다음 선수 차례다.
-- GLOBAL 점수에서 100점을 먼저 획득한 선수가 승리
+3. 게임에 주사위를 하나 더 추가해서 지금 두 개의 주사위가 생기도록 한다.
+그 선수는 그 중 한 명이 1점일 때 현재 점수를 잃는다.
+(힌트 : 두 번째 주사위를 위치시키기 위해서는 CSS가 필요하므로 첫 번째 주사위의 CSS 코드를 살펴보자.) 
 */
 
 var scores, roundScore, activePlayer, gamePlaying;
@@ -27,6 +25,7 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         var diceDOM = document.querySelector('.dice');
         diceDOM.style.display = 'block';
         diceDOM.src = 'dice-' + dice + '.png';
+
         // 3. Update the round score IF the rooled number was NOT a 1
         if (dice !== 1) {
             //Add score
@@ -53,7 +52,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
         // Check the 누가 이겼나 this game
         // 100점 먼저 얻으면 승리
-        if (scores[activePlayer] >= 10) {
+        if (scores[activePlayer] >= 1000) {
             document.querySelector('#name-' + activePlayer).textContent =
                 'Player ' + (activePlayer + 1) + ' Win!!';
             document.querySelector('.dice').style.display = 'none';
