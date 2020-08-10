@@ -13,21 +13,41 @@
 */
 
 var scores, roundScore, activePlayer, gamePlaying;
+var preScore, winScore;
+
 /*, dice 28번줄에 지역변수로 선언했기에 사용불가 */
 init(); // 함수 선언식을 사용했기에 여기에 써도 실행 됨
 
 document.querySelector('.btn-roll').addEventListener('click', function () {
     if (gamePlaying) {
         // 1. Random number
-        var dice = Math.floor(Math.random() * 6) + 1;
+        var dice1 = Math.floor(Math.random() * 6) + 1;
+        var dice2 = Math.floor(Math.random() * 6) + 1;
 
         // 2. Display the result
-        var diceDOM = document.querySelector('.dice');
-        diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-' + dice + '.png';
+        document.getElementById('dice-1').style.display = 'block';
+        document.getElementById('dice-2').style.display = 'block';
+        document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+        document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 
         // 3. Update the round score IF the rooled number was NOT a 1
-        if (dice !== 1) {
+
+        if (dice1 !== 1 && dice2 !== 1) {
+            //Add score
+            roundScore += dice1 + dice2;
+            document.querySelector(
+                '#current-' + activePlayer
+            ).textContent = roundScore;
+        } else {
+            //  Next player
+            nextPlayer();
+        }
+
+        /* if (dice === 6 && preScore === 6) {
+            scores[activePlayer] = 0;
+            document.getElementById('score-' + activePlayer).textContent = '0';
+            nextPlayer();
+        } else if (dice !== 1) {
             //Add score
             roundScore += dice;
             document.querySelector(
@@ -37,6 +57,7 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
             //  Next player
             nextPlayer();
         }
+        preScore = dice; */
     }
 });
 // 콜백함수 : 다른 함수에 전달하는 함수
@@ -50,12 +71,21 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         document.querySelector('#score-' + activePlayer).textContent =
             scores[activePlayer];
 
+        winScore = document.querySelector('.final-score').value;
+
+        // Undefined, 0, null, or "" are COERCED(강제 처리됨) to false
+        // Anything else is COERCED(강제 처리됨) to true
+        if (winScore === false) {
+            winScore = 100;
+        }
+
         // Check the 누가 이겼나 this game
         // 100점 먼저 얻으면 승리
-        if (scores[activePlayer] >= 1000) {
+        if (scores[activePlayer] >= winScore) {
             document.querySelector('#name-' + activePlayer).textContent =
                 'Player ' + (activePlayer + 1) + ' Win!!';
-            document.querySelector('.dice').style.display = 'none';
+            document.getElementById('dice-1').style.display = 'none';
+            document.getElementById('dice-2').style.display = 'none';
             document
                 .querySelector('.player-' + activePlayer + '-panel')
                 .classList.add('winner');
@@ -84,7 +114,8 @@ function nextPlayer() {
     // document.querySelector('.player-0-pannel').classList.remove('active');
     // document.querySelector('.player-1-pannel').classList.add('active');
 
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
 }
 
 document.querySelector('.btn-new').addEventListener('click', init);
@@ -96,7 +127,8 @@ function init() {
     roundScore = 0;
     gamePlaying = true;
 
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
 
     document.getElementById('score-0').textContent = '0';
     document.getElementById('score-1').textContent = '0';
