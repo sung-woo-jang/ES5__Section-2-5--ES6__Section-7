@@ -247,7 +247,7 @@ interviewJobTeacher('Jane');
 interviewJobCoder('Makr');
 
 */
-
+/* 
 //////////////////////////////////////////////////////
 // Lecture: Bind, call and apply
 
@@ -292,15 +292,16 @@ var emily = {
 
 john.presentation('formal', 'morning');
 
-john.presentation.call(emily, 'friendly', 'afternoon');
-// john.presentation.apply(emily, ['friendly', 'afternoon']);
-var johnFriendly = john.presentation.bind(john, 'friendly');
+john.presentation.call(emily, 'friendly', 'afternoon'); // this is called method borrowing
+// john.presentation.call(emily, ['friendly', 'afternoon']);  //presentation: function ([style, timeOfDay]) 였으면 사용 가능
 
+var johnFriendly = john.presentation.bind(john, 'friendly');
 johnFriendly('morning');
 johnFriendly('night');
 
 var emilyFormal = john.presentation.bind(emily, 'formal');
-emilyFormal('afternoon');
+emilyFormal('morning');
+ */
 /************************8
  *
  *
@@ -316,6 +317,7 @@ emilyFormal('afternoon');
  *
  *
  */
+/* 
 var years = [1990, 1965, 1937, 2005, 1998];
 
 // fn == 콜백 함수가 될 매개변수
@@ -340,3 +342,140 @@ var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20));
 
 console.log(ages);
 console.log(fullJapan);
+ */
+
+/* 
+(function () {
+    function Question(question, answers, correct) {
+        this.question = question;
+        this.answers = answers;
+        this.correct = correct;
+    }
+
+    Question.prototype.displayQuestion = function () {
+        console.log(this.question);
+        // 얘가 q1에서 호출되면 Question는 q1을 가리킨다
+        for (var i = 0; i < this.answers.length; i++) {
+            console.log(i + ' : ' + this.answers[i]);
+        }
+    };
+
+    Question.prototype.checkAnswer = function (ans) {
+        if (ans === this.correct) {
+            console.log('Correct answer!');
+        } else {
+            console.log('Wrong answer. Try again :) ');
+        }
+    };
+
+    var q1 = new Question(
+        'Is JavaScript the coolest programming language in the world?',
+        ['Yes', 'No'],
+        0
+    );
+
+    var q2 = new Question(
+        "What's the name of this course's teacher?",
+        ['John', 'Micheal', 'Jonas'],
+        2
+    );
+
+    var q3 = new Question(
+        'What does best describe coding?',
+        ['Boring', 'Hard', 'Fun', 'Tediuos'],
+        2
+    );
+
+    var questions = [q1, q2, q3];
+
+    var n = Math.floor(Math.random() * questions.length);
+
+    questions[n].displayQuestion();
+
+    var answer = parseInt(prompt('Please select the correct answer.'));
+
+    questions[n].checkAnswer(answer);
+})();
+ */
+
+(function () {
+    function Question(question, answers, correct) {
+        this.question = question;
+        this.answers = answers;
+        this.correct = correct;
+    }
+
+    Question.prototype.displayQuestion = function () {
+        console.log(this.question);
+        // 얘가 q1에서 호출되면 Question는 q1을 가리킨다
+        for (var i = 0; i < this.answers.length; i++) {
+            console.log(i + ' : ' + this.answers[i]);
+        }
+    };
+
+    Question.prototype.checkAnswer = function (ans, callback) {
+        var sc;
+
+        if (ans === this.correct) {
+            console.log('Correct answer!');
+            sc = callback(true);
+        } else {
+            console.log('Wrong answer. Try again :) ');
+            sc = callback(false);
+        }
+        this.displayQuestion(sc);
+    };
+
+    Question.prototype.displayScore = function (score) {
+        console.log('Your current score is: ' + score);
+        console.log('----------------------------------');
+    };
+
+    var q1 = new Question(
+        'Is JavaScript the coolest programming language in the world?',
+        ['Yes', 'No'],
+        0
+    );
+
+    var q2 = new Question(
+        "What's the name of this course's teacher?",
+        ['John', 'Micheal', 'Jonas'],
+        2
+    );
+
+    var q3 = new Question(
+        'What does best describe coding?',
+        ['Boring', 'Hard', 'Fun', 'Tediuos'],
+        2
+    );
+
+    var questions = [q1, q2, q3];
+
+    function score() {
+        var sc = 0;
+
+        return function (correct) {
+            if (correct) {
+                sc++;
+            }
+            return sc;
+        };
+    }
+    var keepScore = score();
+
+    function nextQuestion() {
+        var n = Math.floor(Math.random() * questions.length);
+
+        questions[n].displayQuestion();
+
+        var answer = prompt('Please select the correct answer.');
+
+        if (answer !== 'exit') {
+            questions[n].checkAnswer(parseInt(answer), keepScore);
+
+            nextQuestion();
+        }
+    }
+
+    nextQuestion();
+})();
