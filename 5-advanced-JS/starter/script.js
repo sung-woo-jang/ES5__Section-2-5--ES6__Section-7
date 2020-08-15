@@ -97,7 +97,6 @@ console.log(obj.city);      // San Francisco
 // 함수가 다른 함수를 인수로 받아들이는걸 보자
 var years = [1990, 1965, 1937, 2005, 1998];
 
-// fn == 콜백 함수가 될 매개변수
 function arrayCalc(arr, fn) {
     var arrRes = [];
     for (var i = 0; i < arr.length; i++) {
@@ -122,17 +121,15 @@ function maxHeartRate(el) {
     }
 }
 
+// arrayCalc(years, calculateAge()); 로 쓰지 않는 이유는
+// 콜백 함수로 쓰기 위해서다.(103번째 줄에서 함수를 호출하기 위해)
 var ages = arrayCalc(years, calculateAge);
-// 함수()가 아닌 그얄 쓰는게 콜백함수임 ↑
-// 지금이 아닌 arrayClac 함수에 의해 호출되길 원한다는 의도
-// 이렇게 나중에 호출되기 때문에 콜백함수라고 불림
-
 var fullAges = arrayCalc(ages, isFullAge);
 var rates = arrayCalc(ages, maxHeartRate);
 
-console.log(ages); // [26, 51, 79, 11, 18]
-console.log(fullAges); // [true, true, true, false, true]
-console.log(rates); // [189, 173, 154, -1, 195]
+console.log(ages);
+console.log(fullAges);
+console.log(rates);
  */
 /* 
 function interviewQuestion(job) {
@@ -142,7 +139,7 @@ function interviewQuestion(job) {
         };
     } else if (job === 'teacher') {
         return function (name) {
-            console.log('What subject do you teach, ' + name + '?');
+            console.log('what subjectg do you teach, ' + name + '?');
         };
     } else {
         return function (name) {
@@ -155,99 +152,50 @@ var teacherQuestion = interviewQuestion('teacher');
 var designerQuestion = interviewQuestion('designer');
 
 teacherQuestion('John');
-designerQuestion('John');
+designerQuestion('Jane'); */
 
-interviewQuestion('teacher')('Mark');
-*/
-
-/* 
 //   Immediately Invoked Functions Expressions
 //  Lecture : IIFE (즉시 선언되는 함수 표현식)
-
-// 일반 함수 선언식
-function game() {
-    var score = Math.random() * 10;
-    console.log(score >= 5);
-}
-game();
-
-// 데이터 프라이버시 확보, 다른 변수 방해 x
+/* 
 (function () {
     var score = Math.random() * 10;
     console.log(score >= 5);
 })();
-
-(function (goodLuck) {
-    var score = Math.random() * 10;
-    console.log(score >= 5 - goodLuck);
-})(5); // only true
-
-(showName = function (name) {
-    console.log(name || 'No Name');
-})();               // No Name
-showName('Rich');   // Rich
-showName();         // No Name
  */
-
-/*********************************
+/********************************
  * 
+ 
  //  Lecture : Closures
  
  function retirement(retirementAge) {
      var a = ' years left until retirement.';
      return function (yearOfBirth) {
          var age = 2016 - yearOfBirth;
-        console.log(retirementAge - age + a);
-    };
-}
-
-var retirementUS = retirement(66);
-var retirementGermany = retirement(65);
-var retirementIceland = retirement(67);
-
-retirementGermany(1990);
-retirementUS(1990);
-retirementIceland(1990);
-
-/***********************
-function interviewQuestion(job) {
-    if (job === 'designer') {
-        return function (name) {
-            console.log(name + ', can you please explain what UX design is?');
-        };
-    } else if (job === 'teacher') {
-        return function (name) {
-            console.log('What subject do you teach, ' + name + '?');
-        };
-    } else {
-        return function (name) {
-            console.log('Hello ' + name + ', what do you do?');
+         console.log(retirementAge - age + a);
         };
     }
-} 
-/////////////////////////
-function interviewQuestion(job) {
-    return function (name) {
-        if (job === 'designer') {
-            console.log(name + ', can you please explain what UX design is?');
-        } else if (job === 'teacher') {
-            console.log('What subject do you teach, ' + name + '?');
-        } else {
-            console.log('Hello ' + name + ', what do you do?');
-        }
-    };
-}
-
-var interviewDesigner = interviewQuestion('designer');
-var interviewJobTeacher = interviewQuestion('teacher');
-var interviewJobCoder = interviewQuestion('coder');
-
-interviewDesigner('John');
-interviewJobTeacher('Jane');
-interviewJobCoder('Makr');
-
+    
+    var retirementGermany = retirement(65)(1990);
+    var retirementUS = retirement(66)(1990);
+    var retirementIceLand = retirement(67)(1990);
+    
+    function interviewQuestion(job) {
+        return function (name) {
+            if (job === 'designer') {
+                console.log(name + ', can you please explain what UX design is?');
+            } else if (job === 'teacher') {
+                console.log('what subjectg do you teach, ' + name + '?');
+            } else {
+                console.log('Hello ' + name + ', what do you do?');
+            }
+        };
+    }
+    
+interviewQuestion('designer')('John');
+interviewQuestion('teacher')('Jane');
+interviewQuestion('developer')('Mark');
 */
-/* 
+
 //////////////////////////////////////////////////////
 // Lecture: Bind, call and apply
 
@@ -264,13 +212,13 @@ var john = {
                     this.name +
                     ", I'm a " +
                     this.job +
-                    "and I'm " +
+                    " and I'm " +
                     this.age +
                     ' years old.'
             );
         } else if (style === 'friendly') {
             console.log(
-                "Hey! Wass up? I'm " +
+                "Hey What's up? I'm " +
                     this.name +
                     ", I'm a " +
                     this.job +
@@ -286,41 +234,29 @@ var john = {
 
 var emily = {
     name: 'Emily',
-    age: 30,
+    age: 35,
     job: 'designer',
 };
 
 john.presentation('formal', 'morning');
 
-john.presentation.call(emily, 'friendly', 'afternoon'); // this is called method borrowing
-// john.presentation.call(emily, ['friendly', 'afternoon']);  //presentation: function ([style, timeOfDay]) 였으면 사용 가능
+// 호출 메서드의 첫 번째 인자는 항상 그 변수를 설정하는 것이다.
+// 이케 호출하면 john 객체의 this변수는 emily로 변함.
+john.presentation.call(emily, 'friendly', 'afternoon');
+john.presentation.apply(emily, ['friendly', 'afternoon']);
+// 둘이 다른 점은 인자를 배열로 보내냐 아니냐의 차이
 
+// bind 메서드는 함수를 반환하기에 그것을 변수에 저장해야함
 var johnFriendly = john.presentation.bind(john, 'friendly');
 johnFriendly('morning');
 johnFriendly('night');
+// 이런 식으로 내부함수를 원하는 타이밍에 호출할 수 있는 장점이 있음
+// 뭐랄까 메소드에서의 클로저 느낌
 
-var emilyFormal = john.presentation.bind(emily, 'formal');
-emilyFormal('morning');
- */
-/************************8
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-/* 
+/////////////////////////////////////
+
 var years = [1990, 1965, 1937, 2005, 1998];
 
-// fn == 콜백 함수가 될 매개변수
 function arrayCalc(arr, fn) {
     var arrRes = [];
     for (var i = 0; i < arr.length; i++) {
@@ -339,10 +275,10 @@ function isFullAge(limit, el) {
 
 var ages = arrayCalc(years, calculateAge);
 var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20));
-
+/* isFullAge.bind(this, 20) = function isFullAge(el) {
+    return el >= 20;    }; */
 console.log(ages);
 console.log(fullJapan);
- */
 
 /* 
 (function () {
@@ -397,7 +333,7 @@ console.log(fullJapan);
     questions[n].checkAnswer(answer);
 })();
  */
-
+/* 
 (function () {
     function Question(question, answers, correct) {
         this.question = question;
@@ -479,3 +415,4 @@ console.log(fullJapan);
 
     nextQuestion();
 })();
+ */
