@@ -172,7 +172,7 @@ ages6 = years.map((cur, index) => {
 });
 console.log(ages6);
  */
-
+/* 
 // Lecture : Arrow functions 2
 
 // ES5
@@ -193,4 +193,151 @@ var box5 = {
     },
 };
 
-box5.clickMe();
+// box5.clickMe();
+
+// ES6
+
+const box6 = {
+    color: 'green',
+    position: 1,
+    clickMe: function () {
+        document.querySelector('.green').addEventListener('click', () => {
+            var str;
+            str = `This is box number ${this.position} and it is ${this.color}`;
+            alert(str);
+        });
+    },
+};
+
+box6.clickMe();
+ */
+
+/* 
+const box66 = {
+    color: 'green',
+    position: 1,
+    clickMe: () => {
+        document.querySelector('.green').addEventListener('click', () => {
+            var str;
+            str = `This is box number ${this.position} and it is ${this.color}`;
+            alert(str);
+        });
+    },
+};
+
+box66.clickMe();
+
+function Person(name) {
+    this.name = name;
+}
+
+// ES5
+Person.prototype.myFriends5 = function (friends) {
+    var arr = friends.map(
+        function (el) {
+            return this.name + ' is friends with ' + el;
+        }.bind(this)
+        );
+        console.log(arr);
+    };
+    
+    var friends5 = ['Bob', 'Jane', 'Mark'];
+    new Person('John').myFriends5(friends5);
+    
+    // ES6
+    Person.prototype.myFriends6 = function (friends) {
+        var arr = friends.map((el) => `${this.name} is friends with ${el}`);
+        console.log(arr);
+    };
+    
+    var friends6 = ['Jot Bob', 'Moon Jane', 'Mark Henri'];
+    new Person('Penchi').myFriends5(friends6);
+    
+    */
+/* 
+// Lecture : Destructuring
+
+// ES5
+var john = ['John', 26];
+// var name = john[0];
+// var age = john[1];
+
+// ES6
+const [name, year] = ['John', 26];
+
+console.log(name);
+console.log(year);
+
+const obj = {
+    firstName: 'John',
+    lastName: 'Smith',
+};
+
+const { firstName, lastName } = obj;
+console.log(firstName);
+console.log(lastName);
+
+const { firstName: a, lastName: b } = obj;
+
+console.log(a);
+console.log(b);
+
+function calcAgeRetirement(year) {
+    const age = new Date().getFullYear() - year - 4;
+    return [age, 65 - age];
+}
+
+const [age5, retirement5] = calcAgeRetirement(1990);
+console.log(age5);
+console.log(retirement5);
+ */
+
+//  Lecture : Arrays
+
+const boxes = document.querySelectorAll('.box');
+
+// ES5
+
+var boxesArr5 = Array.prototype.slice.call(boxes);
+
+boxesArr5.forEach(function (cur) {
+    cur.style.backgroundColor = 'dodgerblue';
+});
+
+//  ES6
+const boxesArr6 = Array.from(boxes);
+boxesArr6.forEach((cur) => (cur.style.backgroundColor = 'dodgerblue'));
+
+/* 
+// ES5
+for (var i = 0; i < boxesArr5.length; i++) {
+    if (boxesArr5[i].className === 'box blue') {
+        break;
+    }
+    boxesArr5[i].textContent = 'I changed to blue!';
+}
+
+// ES6
+for (const cur of boxesArr6) {
+    if (cur.className.includes('blue')) {
+        continue;
+    }
+    cur.textContent = 'I changed to blue!';
+}
+
+*/
+
+// ES5
+var ages = [12, 17, 8, 21, 14, 11];
+
+var full = ages.map(function (cur) {
+    return cur >= 18;
+});
+console.log(full);
+
+console.log(full.indexOf(true));
+console.log(ages[full.indexOf(true)]);
+
+// ES6
+console.log(ages.findIndex((cur) => cur >= 18));
+console.log(ages.find((cur) => cur >= 19));
