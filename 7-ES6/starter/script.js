@@ -292,6 +292,7 @@ console.log(age5);
 console.log(retirement5);
  */
 
+/* 
 //  Lecture : Arrays
 
 const boxes = document.querySelectorAll('.box');
@@ -308,7 +309,6 @@ boxesArr5.forEach(function (cur) {
 const boxesArr6 = Array.from(boxes);
 boxesArr6.forEach((cur) => (cur.style.backgroundColor = 'dodgerblue'));
 
-/* 
 // ES5
 for (var i = 0; i < boxesArr5.length; i++) {
     if (boxesArr5[i].className === 'box blue') {
@@ -326,7 +326,7 @@ for (const cur of boxesArr6) {
 }
 
 */
-
+/* 
 // ES5
 var ages = [12, 17, 8, 21, 14, 11];
 
@@ -341,3 +341,70 @@ console.log(ages[full.indexOf(true)]);
 // ES6
 console.log(ages.findIndex((cur) => cur >= 18));
 console.log(ages.find((cur) => cur >= 19));
+ */
+/* 
+//  Lecture : Spread operator
+
+function addFourAges(a, b, c, d) {
+    return a + b + c + d;
+}
+
+var sum1 = addFourAges(18, 30, 12, 21);
+
+// ES5
+var ages = [18, 30, 12, 21];
+var sum2 = addFourAges.apply(null, ages);
+
+// ES6
+const sum3 = addFourAges(...ages);
+console.log(sum3);
+
+const familySmith = ['John', 'Jane', 'Mark'];
+const familyMiller = ['Mary', 'Bob', 'Ann'];
+const bigFamily = [...familySmith, 'Lily', ...familyMiller];
+console.log(bigFamily);
+
+const h = document.querySelector('h1');
+const boxes = document.querySelectorAll('.box');
+const all = [h, ...boxes];
+
+Array.from(all).forEach((cur) => (cur.style.color = 'purple'));
+ */
+
+//  Lecture : Rest parameters
+/* 
+// ES5
+function isFullAge5() {
+    var argsArr = Array.prototype.slice.call(arguments);
+    argsArr.forEach(function (cur) {
+        console.log(2016 - cur >= 18);
+    });
+}
+
+// isFullAge5(1990, 1999, 1965);
+// isFullAge5(1990, 1999, 1965, 2016, 1987);
+
+// ES6
+function isFullAge6(...years) {
+    years.forEach((cur) => console.log(2016 - cur >= 18));
+}
+
+isFullAge6(1990, 1999, 1965, 2016, 1987);
+ */
+
+// ES5
+function isFullAge5(limit) {
+    var argsArr = Array.prototype.slice.call(arguments, 1);
+    argsArr.forEach(function (cur) {
+        console.log(2016 - cur >= limit);
+    });
+}
+
+// isFullAge5(16, 1990, 1999, 1965);
+
+// ES6
+function isFullAge6(limit, ...years) {
+    years.forEach((cur) => console.log(2016 - cur >= limit));
+}
+
+isFullAge6(16, 1990, 1999, 1965, 2016, 1987);
