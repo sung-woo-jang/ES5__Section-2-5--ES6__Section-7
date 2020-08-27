@@ -518,7 +518,7 @@ class Person6 {
 
 const john6 = new Person6('John', 1990, 'teacher');
  */
-
+/* 
 //  Lecture : Classes and subClasses
 
 // ES5
@@ -581,3 +581,107 @@ class Athlete6 extends Person6 {
 const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
 johnAthlete6.wonMedal();
 johnAthlete6.calculateAge();
+ */
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+class Element {
+    constructor(name, buildYear) {
+        this.name = name;
+        this.buildYear = buildYear;
+    }
+}
+
+class Michuhol extends Element {
+    constructor(name, buildYear, length, size = 3) {
+        super(name, buildYear);
+        this.length = length;
+        this.size = size;
+    }
+
+    calculateAge() {
+        let age = new Date().getFullYear() - this.buildYear;
+    }
+    avgAge() {}
+    townLength() {
+        `${this.name}동의 총 면적은 ${this.length} 입니다`;
+    }
+    townSize() {
+        const size = new Map();
+        size.set(1, 'tiny');
+        size.set(2, 'small');
+        size.set(3, 'normal');
+        size.set(4, 'big');
+        size.set(5, 'huge');
+
+        if (this.size >= 5) {
+            this.size = 5;
+        } else if (this.size <= 1) {
+            this.size = 1;
+        }
+
+        console.log(
+            `${this.name}은 ${this.buildYear}에 생겼고 면적은 ${
+                this.length
+            }이고 동네는 ${size.get(this.size)}한 편입니다`
+        );
+    }
+}
+
+class Park extends Element {
+    constructor(name, buildYear, tree, area) {
+        super(name, buildYear);
+        this.tree = tree;
+        this.area = area;
+    }
+
+    density() {
+        console.log(
+            `${this.name} Park has a tree density of ${
+                this.tree / this.area
+            }trees per square ㎢`
+        );
+    }
+
+    moreThan1000() {
+        if (this.tree >= 1000) {
+            console.log(`${this.name} Park has more than 1000 trees`);
+        }
+    }
+}
+
+const allTown = [
+    new Michuhol('SungUi', 1914, 2.11, 2),
+    new Michuhol('DoHwa', 1963, 3.85, 4),
+    new Michuhol('YongHyeon', 1981, 4.22, 4),
+    new Michuhol('JuAn', 1982, 6.18, 6),
+];
+
+const allPark = [
+    new Park('SuBong', 1950, 765, 16.01),
+    new Park('YongJung', 1987, 2765, 29.55),
+    new Park('SeungHak', 1995, 978, 15.67),
+];
+
+function calc(a) {
+    const sum = a.reduce((prev, cur, index) => prev, cur, 0);
+    return [sum, sum / a.length];
+}
+
+function reportPark(p) {
+    p.forEach((el) => el.density());
+    p.forEach((el) => el.moreThan1000());
+}
+
+function reportTown(t) {}
+
+reportPark(allPark);
+reportTown(allTown);
