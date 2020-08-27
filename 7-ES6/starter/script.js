@@ -444,7 +444,7 @@ function SmithPerson(
 var john = new SmithPerson('John', 1990);
 var emily = new SmithPerson('Emily', 1983, 'Diaz', 'spanish');
  */
-
+/* 
 //  Lecture : Maps
 
 const question = new Map();
@@ -463,13 +463,13 @@ question.set(false, 'Wrong, please try again!');
 console.log(question.get('question'));
 // console.log(question.size);
 
-/* if (question.has(4)) {
+if (question.has(4)) {
     console.log('Answer 4 is here');
-} */
+}
 
-/* question.forEach((value, key) =>
+question.forEach((value, key) =>
     console.log(`This is ${key}, and it's set to ${value}`)
-); */
+);
 
 for (let [key, value] of question.entries()) {
     if (typeof key === 'number') {
@@ -480,3 +480,104 @@ for (let [key, value] of question.entries()) {
 const ans = parseInt(prompt('Write the correct answer'));
 
 console.log(question.get(ans === question.get('correct')));
+ */
+/* 
+//  Lecture : classes
+
+// ES5
+var Person5 = function (name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+};
+
+Person5.prototype.calculateAge = function () {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+};
+
+var john5 = new Person5('John', 1990, 'teacher');
+
+// ES6
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+
+    calculateAge() {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }
+
+    static greeting() {
+        console.log('Hey there!');
+    }
+}
+
+const john6 = new Person6('John', 1990, 'teacher');
+ */
+
+//  Lecture : Classes and subClasses
+
+// ES5
+var Person5 = function (name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+};
+
+Person5.prototype.calculateAge = function () {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+};
+
+var Athlete5 = function (name, yearOfBirth, job, olymicGames, medals) {
+    Person5.call(this, name, yearOfBirth, job);
+    this.olymicGames = olymicGames;
+    this.medals = medals;
+};
+
+// prototype 수동설정???
+Athlete5.prototype = Object.create(Person5.prototype);
+Athlete5.prototype.wonMedal = function () {
+    this.medals++;
+    console.log(this.medals);
+};
+
+var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 10);
+
+johnAthlete5.wonMedal();
+johnAthlete5.calculateAge();
+
+// ES6
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+
+    calculateAge() {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }
+}
+
+class Athlete6 extends Person6 {
+    constructor(name, yearOfBirth, job, olymicGames, medals) {
+        super(name, yearOfBirth, job);
+        this.olymicGames = olymicGames;
+        this.medals = medals;
+    }
+
+    wonMedal() {
+        this.medals++;
+        console.log(this.medals);
+    }
+}
+
+const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
+johnAthlete6.wonMedal();
+johnAthlete6.calculateAge();

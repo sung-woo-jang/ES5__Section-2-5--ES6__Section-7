@@ -1,0 +1,41 @@
+Suppose that you're working in a small town administration, and you're in charge of two town elements:
+1. Parks
+2. Streets
+
+It's a very small town, so right now there are only 3 parks and 4 streets. All parks and streets have a name and a bulid year.
+
+At an end-of-year meeting, your boss wants a final report with the following:
+1. Tree density of each park in the town
+(forumla: number of trees/park area)
+2. Average age of each town's park (forumla: sum of all ages / number of parks)
+3. The name of the park that has more than 1000 trees
+4. Total and average length of the town's streets
+5. Size classification of all streets: tiny/small/normal/big/huge. If the size is unknown, the defalut is normal.
+
+All the report data should be printed to the console.
+
+HINT : Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
+
+여러분이 작은 마을 행정부에서 일하고 있으며, 두 가지 마을 요소를 담당하고 있다고 가정해 보십시오.
+1. 공원
+2.거리
+
+아주 작은 마을이라 지금은 공원이 3개, 거리가 4개뿐입니다. 모든 공원과 거리에는 이름과 한 해가 있다.
+
+연말 회의에서 상사는 다음과 같은 최종 보고서를 원한다.
+1.동네 공원별 나무밀도
+(주: 나무 수/공원 구역)
+2. 각 마을 공원의 평균 연령(포룸라: 모든 연령/공원 수의 합계)
+3. 1000그루가 넘는 공원의 이름
+4. 읍내 가로의 총길이와 평균길이는
+5. 모든 거리의 크기 분류:작은/작은/보통/큰/큰/거대 크기를 알 수 없는 경우 기본값은 정상입니다.
+
+모든 보고서 데이터는 콘솔에 인쇄되어야 한다.
+
+힌트 : 클래스, 서브클래스, 템플릿 문자열, 기본 파라미터, 맵, 화살표 기능, 소멸 등 ES6 기능 중 일부를 사용하십시오.
+
+
+
+
+
+
