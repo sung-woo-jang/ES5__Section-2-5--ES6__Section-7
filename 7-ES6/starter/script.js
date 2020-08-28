@@ -581,7 +581,7 @@ class Athlete6 extends Person6 {
 const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
 johnAthlete6.wonMedal();
 johnAthlete6.calculateAge();
- */
+*/
 /**
  *
  *
@@ -593,6 +593,7 @@ johnAthlete6.calculateAge();
  *
  */
 
+/* 
 class Element {
     constructor(name, buildYear) {
         this.name = name;
@@ -607,13 +608,6 @@ class Michuhol extends Element {
         this.size = size;
     }
 
-    calculateAge() {
-        let age = new Date().getFullYear() - this.buildYear;
-    }
-    avgAge() {}
-    townLength() {
-        `${this.name}동의 총 면적은 ${this.length} 입니다`;
-    }
     townSize() {
         const size = new Map();
         size.set(1, 'tiny');
@@ -629,7 +623,7 @@ class Michuhol extends Element {
         }
 
         console.log(
-            `${this.name}은 ${this.buildYear}에 생겼고 면적은 ${
+            `${this.name}-Dong은 ${this.buildYear}년에 생겼고 면적은 ${
                 this.length
             }이고 동네는 ${size.get(this.size)}한 편입니다`
         );
@@ -670,18 +664,142 @@ const allPark = [
     new Park('YongJung', 1987, 2765, 29.55),
     new Park('SeungHak', 1995, 978, 15.67),
 ];
-
 function calc(a) {
-    const sum = a.reduce((prev, cur, index) => prev, cur, 0);
+    const sum = a.reduce((prev, cur) => prev + cur, 0);
     return [sum, sum / a.length];
 }
 
 function reportPark(p) {
+    console.log(`------------공원 보고서-----------`);
+
+    // 공원 개수랑 평균연령
+    const age = p.map((el) => new Date().getFullYear() - el.buildYear);
+    const [sum, averAge] = calc(age);
+    console.log(
+        `공원의 개수는 총 ${p.length}개 이고, 공원들의 평균 나이는 ${averAge} 입니다.`
+    );
+    // Density
     p.forEach((el) => el.density());
+
+    // 나무 1000개 이상의 공원
     p.forEach((el) => el.moreThan1000());
 }
 
-function reportTown(t) {}
+function reportTown(t) {
+    console.log(`------------미추홀구 보고서------------`);
+
+    // 거리수, 총 길이, 평균 길이
+    const len = t.map((el) => el.length);
+    const [length, totalLength] = calc(len);
+    console.log(
+        `마을의 수는 총 ${t.length}개 이고, 총 길이는${length}㎢, 평균 길이는 ${totalLength}㎢이다 `
+    );
+    // 이름, 연도, 사이즈
+    t.forEach((el) => el.townSize());
+}
+
+reportPark(allPark);
+reportTown(allTown); */
+
+class Element {
+    constructor(name, buildYear) {
+        this.name = name;
+        this.buildYear = buildYear;
+    }
+}
+
+class Michuhol extends Element {
+    constructor(name, buildYear, length, size) {
+        super(name, buildYear);
+        this.length = length;
+        this.size = size;
+    }
+    sortSize() {
+        const tSize = new Map();
+        tSize.set(1, 'tiny');
+        tSize.set(2, 'small');
+        tSize.set(3, 'normal');
+        tSize.set(4, 'big');
+        tSize.set(5, 'huge');
+
+        if (this.size >= 5) {
+            this.size = 5;
+        } else if (this.size <= 1) {
+            this.size = 1;
+        }
+
+        console.log(
+            `${this.name}-Dong은 ${this.buildYear}년에 생겼고, 면적은 ${
+                this.length
+            }이며 동네는${tSize.get(Math.floor(this.size))}한 편입니다.`
+        );
+    }
+}
+
+class Park extends Element {
+    constructor(name, buildYear, numTrees, length) {
+        super(name, buildYear);
+        this.numTrees = numTrees;
+        this.length = length;
+    }
+
+    density() {
+        const parkDensity = this.numTrees / this.length;
+        console.log(
+            `${this.name}Park의 나무당 공원면적은 ${parkDensity}㎢입니다.`
+        );
+    }
+    moreThan1000() {
+        if (this.numTrees >= 1000) {
+            console.log(
+                `${this.name}-Park의 나무 개수는 ${this.numTrees}개 입니다 `
+            );
+        }
+    }
+}
+
+const allTown = [
+    new Michuhol('SungUi', 1914, 2.11, 2),
+    new Michuhol('DoHwa', 1963, 3.85, 4),
+    new Michuhol('YongHyeon', 1981, 4.22, 4),
+    new Michuhol('JuAn', 1982, 6.18, 6),
+];
+
+const allPark = [
+    new Park('SuBong', 1950, 765, 16.01),
+    new Park('YongJung', 1987, 2765, 29.55),
+    new Park('SeungHak', 1995, 978, 15.67),
+];
+
+function calc(arr) {
+    const sum = arr.reduce((cur, value) => cur + value, 0);
+    return [sum, sum / arr.length];
+}
+
+function treeCalc(arr) {
+    let sum = 0;
+    if (arr.numTreesm >= 1000) {
+        sum++;
+    }
+    return sum;
+}
+
+function reportPark(p) {
+    // 공원 개수, 평균나이
+    const numAge = p.map((el) => new Date().getFullYear() - el.buildYear);
+    const [sum, sumDiv] = calc(numAge);
+    console.log(
+        `미추홀구에는 공원이 ${p.length}개 있는데 공원들의 평균나이는 ${sumDiv}입니다`
+    );
+    // 공원 나무 면적
+    p.forEach((el) => el.density());
+    // 나무 1000개 이상 공원
+    p.forEach((el) => el.moreThan1000());
+}
+function reportTown(t) {
+    // 마을 개수, 총 면적, 평균 면적
+    // 마을 이름, 연도, 면적, 동네 크기
+}
 
 reportPark(allPark);
 reportTown(allTown);
